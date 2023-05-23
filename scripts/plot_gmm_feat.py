@@ -153,7 +153,7 @@ USAGE='''
 Draws the regions in space covered with a certain probability by a GMM.
 
 Usage:
-    plotGMM [--help|-h] [options] <file-gmm> [<file-feat>...]
+    plot_gmm_feat [--help|-h] [options] <file-gmm> [<file-feat>...]
 
 Options:
     --xDim INT, -x INT               'x' dimension to use from GMM and feature vectors [default: 0]

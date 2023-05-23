@@ -24,7 +24,7 @@ mfcc_nfilter=$2
 inputfile=$3
 outputfile=$4
 
-UBUNTU_SPTK=1
+UBUNTU_SPTK=0
 if [[ $UBUNTU_SPTK == 1 ]]; then
    # In case you install SPTK using debian package (apt-get)
    X2X="sptk x2x"
@@ -44,7 +44,7 @@ sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WIND
 	$MFCC -l 240 -s 8 -w 1 -m $mfcc_order -n $mfcc_nfilter > $base.mfcc
 
 # Our array files need a header with the number of cols and rows:
-ncol=$mfcc_order # mfcc p =>  (c0 c1 c2 ... cp-1) 
+ncol=$mfcc_order # mfcc p =>  mc(1) mc(2) ... mc(p) 
 nrow=`$X2X +fa < $base.mfcc | wc -l | perl -ne 'print $_/'$ncol', "\n";'`
 
 # Build fmatrix file by placing nrow and ncol in front, and the data after them
