@@ -100,9 +100,35 @@ ejercicios indicados.
 
 - Inserte una imagen mostrando la dependencia entre los coeficientes 2 y 3 de las tres parametrizaciones
   para todas las señales de un locutor.
+  <p align="center">
+  <img src="./img/lp.png"  width=700" /><br />
+  <img src="./img/lpcc.png"  width="700" /><br />
+  <img src="./img/mfcc.png"  width="700" /><br />
+  </p>
   
   + Indique **todas** las órdenes necesarias para obtener las gráficas a partir de las señales 
     parametrizadas.
+    > En primer lugar, damos permiso de ejecución a los archivos creados para lpcc y mfcc
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    chmod +x /Users/joanajusto/PAV/bin/wav2lpcc 
+    chmod +x /Users/joanajusto/PAV/bin/wav2mfcc 
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    > A continuación calculamos las predicciones mediante el uso de run_spkid
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    FEAT=lp /Users/joanajusto/PAV/bin/run_spkid lp
+    FEAT=lpcc /Users/joanajusto/PAV/bin/run_spkid lpcc
+    FEAT=mfcc /Users/joanajusto/PAV/bin/run_spkid mfcc  
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    > Convertimos a fichero los coeficientes 2 y 3 del ficheros de parámetros del locutor SES017
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    fmatrix_show work/lp/BLOCK01/SES017/*.lp | egrep '^\[' | cut -f4,5 > plots/lp.txt  
+    fmatrix_show work/lpcc/BLOCK01/SES017/*.lpcc | egrep '^\[' | cut -f4,5 > plots/lpcc.txt 
+    fmatrix_show work/mfcc/BLOCK01/SES017/*.mfcc | egrep '^\[' | cut -f4,5 > plots/mfcc.txt   
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    > Finalmente hacemos el plot de los ficheros de texto. Los códigos usados son los siguientes: <br />
+    [`plot_lp.py`](/plots/plot_lp.py) <br />
+    [`plot_lp.py`](/plots/plot_lp.py) <br />
+    [`plot_lp.py`](/plots/plot_lp.py) <br />
   + ¿Cuál de ellas le parece que contiene más información?
   > La propiedad de correlación indica el grado de similitud entre dos señales. Cuando dos señales están altamente correladas, proporcionan menos información nueva. En las gráficas superiores, se puede observar que la gráfica de MFCC muestra puntos más separados, lo que indica una menor correlación y mayor diversidad de información. Esta gráfica es la que aporta más información relevante seguida de LPCC. Por otro lado, en la gráfica de LP se observa que los puntos están muy cerca y correlados, lo que implica que proporciona menos información adicional (hay poca dispersión entre los puntos).
 
@@ -111,7 +137,7 @@ ejercicios indicados.
 
   |                        | LP   | LPCC | MFCC |
   |------------------------|:----:|:----:|:----:|
-  | &rho;<sub>x</sub>[2,3] |      |      |      |
+  | &rho;<sub>x</sub>[2,3] | -0.872284 | 0.179267 | -0.210827 |
   
   + Compare los resultados de <code>pearson</code> con los obtenidos gráficamente.
   
