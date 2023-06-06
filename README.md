@@ -105,6 +105,7 @@ ejercicios indicados.
   <img src="./img/lpcc.png"  width="500" /><br />
   <img src="./img/mfcc.png"  width="500" /><br />
   </p>
+  
   + Indique **todas** las órdenes necesarias para obtener las gráficas a partir de las señales 
     parametrizadas.
     > En primer lugar, damos permiso de ejecución a los archivos creados para lpcc y mfcc
