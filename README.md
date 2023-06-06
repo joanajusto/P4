@@ -80,7 +80,7 @@ ejercicios indicados.
 
   * ¿Por qué es más conveniente el formato *fmatrix* que el SPTK?
   
-  > Es útil puesto que permite ver los datos del fichero de tal manera que se identifican claramente las tramas en cada fila y los coeficientes de las señales en las columnas. Para visualizar los resultados podemos utilizar fmatrix_show, y para ver columnas concretas se utiliza fmatrix_cut.
+  > El formato *fmatrix* es útil porque ofrece una representación clara y estructurada de los datos del fichero. Permite visualizar las tramas en filas individuales y los coeficientes de las señales en columnas distintas. Para facilitar la visualización de los resultados, se puede utilizar la herramienta `fmatrix_show`. Además, si se desea examinar columnas específicas, se puede emplear `fmatrix_cut`.
 
 - Escriba el *pipeline* principal usado para calcular los coeficientes cepstrales de predicción lineal
   (LPCC) en su fichero <code>scripts/wav2lpcc.sh</code>:
