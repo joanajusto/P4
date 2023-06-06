@@ -32,17 +32,69 @@ ejercicios indicados.
 - Analice el script `wav2lp.sh` y explique la misión de los distintos comandos involucrados en el *pipeline*
   principal (`sox`, `$X2X`, `$FRAME`, `$WINDOW` y `$LPC`). Explique el significado de cada una de las 
   opciones empleadas y de sus valores.
+  
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.sh
+  sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WINDOW -l 240 -L 240 | $LPC -l 240 -m $lpc_order > $base.lp || exit 1
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  
+  > ### SOX (Sound eXchange)
+  > Este comando toma el archivo de entrada (`$inputfile`) y lo convierte en un flujo de audio sin procesar (`-t raw`). Además, especifica que los datos están codificados como muestras de 16 bits con signo (`-e signed -b 16 -`).
+  >
+  > ### $X2X
+  > Este comando asume que `$X2X` es un programa externo que convierte el formato del flujo de audio. 
+  > La opción `+sf` se utiliza para convertir el flujo de audio a coma flotante.
+  >
+  > ### $FRAME
+  > Es otro programa externo que se utiliza para dividir el flujo de audio en tramas más pequeñas. En este caso, se especifica una longitud de trama de 240 muestras (`-l 240`) y un desplazamiento de 80 muestras (`-p 80`).
+  >
+  > ### $WINDOW
+  >  es un programa que aplica una ventana a cada trama de audio. Aquí se especifica una longitud de ventana de 240 muestras (`-l 240`) y una superposición de ventanas de 240 muestras (`-L 240`), lo que significa que no hay superposición.
+  >
+  > ### $LPC
+  > es un programa que realiza análisis de predicción lineal en cada trama de audio. Se especifica una longitud de trama de 240 muestras (`-l 240`) y se utiliza un orden LPC determinado por la variable `$lpc_order`. 
+  > Los resultados del análisis LPC se redirigen al archivo `$base.lp`.
+
 
 - Explique el procedimiento seguido para obtener un fichero de formato *fmatrix* a partir de los ficheros de
   salida de SPTK (líneas 45 a 51 del script `wav2lp.sh`).
+  
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.sh
+  # Main command for feature extration
+  sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WINDOW -l 240 -L 240 | $LPC -l 240 -m $lpc_order > $base.lp || exit 1
+  
+  # Our array files need a header with the number of cols and rows:
+  ncol=$((lpc_order+1)) # lpc p =>  (gain a1 a2 ... ap) 
+  nrow=`$X2X +fa < $base.lp | wc -l | perl -ne 'print $_/'$ncol', "\n";'`
+  
+  # Build fmatrix file by placing nrow and ncol in front, and the data after them
+  echo $nrow $ncol | $X2X +aI > $outputfile
+  cat $base.lp >> $outputfile
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  
+  > - El fmatrix crea una matriz que incluye el número de filas `nrow` y todos los coeficientes `ncol`. Las filas corresponden a las tramas de la señal y las columnas a los coeficientes de cada trama.
+  > - Se define el número de columnas como la variable `ncol` como la suma de `lpc_order+1`. 
+  > - Se utiliza el comando `$X2X +fa < $base.lp` para convertir el fichero `$base.lp` en un formato legible por SPTK.
+  > - A continuación, se utiliza el *pipeline* `|` para pasar el resultado al comando `wc -l`. Este comando cuenta el número de líneas en la entrada.
+  > - Después de obtener el recuento de líneas, se utiliza el comando `perl` para realizar el cálculo de filas. La expresión `'print $_/'$ncol', "\n";'` divide el número total de líneas por el valor de `ncol`. Esto se hace para calcular el número de filas necesarias en el fichero fmatrix basado en el número de columnas definidas anteriormente.
+  > - Finalmente, el resultado del cálculo se asigna a la variable `nrow`, que representa el número de filas necesarias en el fichero *fmatrix*.
 
   * ¿Por qué es más conveniente el formato *fmatrix* que el SPTK?
+  
+  > El formato *fmatrix* es útil porque ofrece una representación clara y estructurada de los datos del fichero. Permite visualizar las tramas en filas individuales y los coeficientes de las señales en columnas distintas. Para facilitar la visualización de los resultados, se puede utilizar la herramienta `fmatrix_show`. Además, si se desea examinar columnas específicas, se puede emplear `fmatrix_cut`.
 
 - Escriba el *pipeline* principal usado para calcular los coeficientes cepstrales de predicción lineal
   (LPCC) en su fichero <code>scripts/wav2lpcc.sh</code>:
+  
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.sh
+  sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WINDOW -l 240 -L 240 | $LPC -l 240 -m $lpc_order | $LPCC -m $lpc_order -M $lpcc_order > $base.lp
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - Escriba el *pipeline* principal usado para calcular los coeficientes cepstrales en escala Mel (MFCC) en su
   fichero <code>scripts/wav2mfcc.sh</code>:
+  
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.sh
+  sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WINDOW -l 240 -L 240 | $MFCC -l 240 -s 8 -w 1 -m $mfcc_order -n $mfcc_nfilter > $base.mfcc
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ### Extracción de características.
 
@@ -52,6 +104,7 @@ ejercicios indicados.
   + Indique **todas** las órdenes necesarias para obtener las gráficas a partir de las señales 
     parametrizadas.
   + ¿Cuál de ellas le parece que contiene más información?
+  > La propiedad de correlación indica el grado de similitud entre dos señales. Cuando dos señales están altamente correladas, proporcionan menos información nueva. En las gráficas superiores, se puede observar que la gráfica de MFCC muestra puntos más separados, lo que indica una menor correlación y mayor diversidad de información. Esta gráfica es la que aporta más información relevante seguida de LPCC. Por otro lado, en la gráfica de LP se observa que los puntos están muy cerca y correlados, lo que implica que proporciona menos información adicional (hay poca dispersión entre los puntos).
 
 - Usando el programa <code>pearson</code>, obtenga los coeficientes de correlación normalizada entre los
   parámetros 2 y 3 para un locutor, y rellene la tabla siguiente con los valores obtenidos.
