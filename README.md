@@ -126,9 +126,9 @@ ejercicios indicados.
     fmatrix_show work/mfcc/BLOCK01/SES017/*.mfcc | egrep '^\[' | cut -f4,5 > plots/mfcc.txt   
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     > Finalmente hacemos el plot de los ficheros de texto. Los códigos usados son los siguientes:
-    [`plot_lp.py`](/plots/plot_lp.py)
-    [`plot_lp.py`](/plots/plot_lp.py)
-    [`plot_lp.py`](/plots/plot_lp.py)
+    [`plot_lp.py`](/plots/plot_lp.py) <br />
+    [`plot_lp.py`](/plots/plot_lp.py) <br />
+    [`plot_lp.py`](/plots/plot_lp.py) <br />
   + ¿Cuál de ellas le parece que contiene más información?
   > La propiedad de correlación indica el grado de similitud entre dos señales. Cuando dos señales están altamente correladas, proporcionan menos información nueva. En las gráficas superiores, se puede observar que la gráfica de MFCC muestra puntos más separados, lo que indica una menor correlación y mayor diversidad de información. Esta gráfica es la que aporta más información relevante seguida de LPCC. Por otro lado, en la gráfica de LP se observa que los puntos están muy cerca y correlados, lo que implica que proporciona menos información adicional (hay poca dispersión entre los puntos).
 
