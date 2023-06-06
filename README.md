@@ -101,9 +101,9 @@ ejercicios indicados.
 - Inserte una imagen mostrando la dependencia entre los coeficientes 2 y 3 de las tres parametrizaciones
   para todas las señales de un locutor.
   <p align="center">
-  <img src="./img/lp.png"  width="500" /><br />
-  <img src="./img/lpcc.png"  width="500" /><br />
-  <img src="./img/mfcc.png"  width="500" /><br />
+  <img src="./img/lp.png"  width=700" /><br />
+  <img src="./img/lpcc.png"  width="700" /><br />
+  <img src="./img/mfcc.png"  width="700" /><br />
   </p>
   
   + Indique **todas** las órdenes necesarias para obtener las gráficas a partir de las señales 
