@@ -125,7 +125,7 @@ ejercicios indicados.
     fmatrix_show work/lpcc/BLOCK01/SES017/*.lpcc | egrep '^\[' | cut -f4,5 > plots/lpcc.txt 
     fmatrix_show work/mfcc/BLOCK01/SES017/*.mfcc | egrep '^\[' | cut -f4,5 > plots/mfcc.txt   
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    > Finalmente hacemos el plot de los ficheros de texto. Los códigos usados son los siguientes:
+    > Finalmente hacemos el plot de los ficheros de texto. Los códigos usados son los siguientes: <br />
     [`plot_lp.py`](/plots/plot_lp.py) <br />
     [`plot_lp.py`](/plots/plot_lp.py) <br />
     [`plot_lp.py`](/plots/plot_lp.py) <br />
