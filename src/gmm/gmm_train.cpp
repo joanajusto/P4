@@ -57,14 +57,17 @@ int main(int argc, const char *argv[])
 	/// initicialization accordingly.
 	switch (init_method) {
 		case 0:
-			gmm.random_init(data,nmix);
+			gmm.random_init(data, nmix);
 			break;
 		case 1:
+			gmm.vq_lbg(data, nmix, init_iterations, init_threshold, verbose);
 			break;
 		case 2:
+			gmm.em_split(data, nmix, init_iterations, init_threshold, verbose);
 			break;
 		default:
-			;
+			gmm.random_init(data, nmix);
+			break;
 	}
 
 	/// \TODO Apply EM to estimate GMM parameters (complete the funcion in gmm.cpp)
