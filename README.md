@@ -100,6 +100,7 @@ ejercicios indicados.
 
 - Inserte una imagen mostrando la dependencia entre los coeficientes 2 y 3 de las tres parametrizaciones
   para todas las señales de un locutor.
+<<<<<<< HEAD
 
 
   + Indique **todas** las órdenes necesarias para obtener las gráficas a partir de las señales 
@@ -125,6 +126,18 @@ ejercicios indicados.
     [`plot_lp.py`](/plots/plot_lp.py)
     [`plot_lp.py`](/plots/plot_lp.py)
     [`plot_lp.py`](/plots/plot_lp.py)
+=======
+  
+  ![image](img/lp.png)
+  
+  ![image](img/lpcc.png)
+  
+  ![image](img/mfcc.png)
+  
+  + Indique **todas** las órdenes necesarias para obtener las gráficas a partir de las señales 
+    parametrizadas.
+    
+>>>>>>> 3c291499f9e14cd7e7dbeb4a60bcb22765afb8fa
   + ¿Cuál de ellas le parece que contiene más información?
   > La propiedad de correlación indica el grado de similitud entre dos señales. Cuando dos señales están altamente correladas, proporcionan menos información nueva. En las gráficas superiores, se puede observar que la gráfica de MFCC muestra puntos más separados, lo que indica una menor correlación y mayor diversidad de información. Esta gráfica es la que aporta más información relevante seguida de LPCC. Por otro lado, en la gráfica de LP se observa que los puntos están muy cerca y correlados, lo que implica que proporciona menos información adicional (hay poca dispersión entre los puntos).
 
