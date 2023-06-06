@@ -130,7 +130,7 @@ ejercicios indicados.
     [`plot_lp.py`](/plots/plot_lp.py) <br />
     [`plot_lp.py`](/plots/plot_lp.py) <br />
   + ¿Cuál de ellas le parece que contiene más información?
-  > La propiedad de correlación indica el grado de similitud entre dos señales. Cuando dos señales están altamente correladas, proporcionan menos información nueva. En las gráficas superiores, se puede observar que la gráfica de MFCC muestra puntos más separados, lo que indica una menor correlación y mayor diversidad de información. Esta gráfica es la que aporta más información relevante seguida de LPCC. Por otro lado, en la gráfica de LP se observa que los puntos están muy cerca y correlados, lo que implica que proporciona menos información adicional (hay poca dispersión entre los puntos).
+  > La propiedad de correlación indica el grado de similitud entre dos señales. Cuando dos señales están altamente correladas, proporcionan menos información nueva. En las gráficas superiores, se puede observar que las gráficas de MFCC muestran puntos más separados, lo que indica una menor correlación y mayor diversidad de información. Estas gráficas son las que aportan más información relevante. Por otro lado, en la gráfica de LP se observa que los puntos están muy cerca y correlados, lo que implica que proporciona menos información adicional (hay poca dispersión entre los puntos).
 
 - Usando el programa <code>pearson</code>, obtenga los coeficientes de correlación normalizada entre los
   parámetros 2 y 3 para un locutor, y rellene la tabla siguiente con los valores obtenidos.
@@ -140,9 +140,11 @@ ejercicios indicados.
   | &rho;<sub>x</sub>[2,3] | -0.872284 | 0.179267 | -0.210827 |
   
   + Compare los resultados de <code>pearson</code> con los obtenidos gráficamente.
+  > Los coeficientes calculados concuerdan con las gráficas previamente calculadas. En primer lugar, el coeficiente de mayor valor absoluto se obtiene en el caso de LP, siendo cercano a 1. Por otro lado, los coeficientes de LPCC y MFCC son significativamente menores que el coeficiente de LP, lo que indica una menor correlación y, por ende, una mayor cantidad de información aportada. En conclusión, los coeficientes MFCC presentan una menor correlación, lo que implica que proporcionan la mayor cantidad de información en comparación con los otros.    
   
 - Según la teoría, ¿qué parámetros considera adecuados para el cálculo de los coeficientes LPCC y MFCC?
-
+> Según la teoría, para el cálculo de LPCC debería ser suficiente con 13 coeficientes, mientras que para MFCC se suelen escoger 13 coeficientes y entre 24 y 40 filtros.
+                                        
 ### Entrenamiento y visualización de los GMM.
 
 Complete el código necesario para entrenar modelos GMM.
