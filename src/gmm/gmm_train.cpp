@@ -9,9 +9,9 @@ using namespace std;
 using namespace upc;
 
 const string DEF_INPUT_EXT = "mcp";
-const unsigned int DEF_ITERATIONS = 20;
+const unsigned int DEF_ITERATIONS = 50;
 const float DEF_THR = 1e-3;
-const unsigned int DEF_NMIXTURES = 5;
+const unsigned int DEF_NMIXTURES = 30;
 const string DEF_GMMFILE = "output.gmm";
 
 int read_data(const string & input_directory, const string & input_extension,

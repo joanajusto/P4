@@ -35,6 +35,26 @@ FINAL_VERIF=$w/verif_test.log
 # temporal para almacenar este resultado intermedio
 TEMP_VERIF=$w/temp_${FEAT}_${name_exp}.log
 
+#Parametros para la parametrización
+#LP
+LPC_order=10
+#LPCC
+LPCC_order=25
+LPCC_cepstrum_order=29
+#MFCC
+MFCC_order=18
+MFCC_filter_bank=26
+MFCC_freq=16
+
+#Parametros para entrenar GMM
+TO_nmix=30               #-m mix\tNumber of mixtures (def. " << DEF_NMIXTURES << ")
+TO_Num_it_fin=30         #-N ite\tNumber of final iterations of EM (def. " << DEF_ITERATIONS << ")
+TO_LogProb_th_fin=0.e-6  #-T thr\tLogProbability threshold of final EM iterations (def. " << DEF_THR << ")
+TO_init_method=1         #-i init\tInitialization method: 0=random, 1=VQ, 2=EM split (def. 0)   
+
+
+TRAIN_OPTS="-i $TO_init_method -T $TO_LogProb_th_fin -N $TO_Num_it_fin -m $TO_nmix"
+
 # ------------------------
 # Usage
 # ------------------------
@@ -82,7 +102,7 @@ compute_lp() {
     shift
     for filename in $(sort $*); do
         mkdir -p `dirname $w/$FEAT/$filename.$FEAT`
-        EXEC="wav2lp 8 $db/$filename.wav $w/$FEAT/$filename.$FEAT"
+        EXEC="wav2lp $LPC_order $db/$filename.wav $w/$FEAT/$filename.$FEAT"
         echo $EXEC && $EXEC || exit 1
     done
 }
@@ -92,7 +112,7 @@ compute_lpcc() {
     shift
     for filename in $(sort $*); do
         mkdir -p `dirname $w/$FEAT/$filename.$FEAT`
-        EXEC="wav2lpcc 16 12 $db/$filename.wav $w/$FEAT/$filename.$FEAT"
+        EXEC="wav2lpcc $LPCC_order $LPCC_cepstrum_order $db/$filename.wav $w/$FEAT/$filename.$FEAT"
         echo $EXEC && $EXEC || exit 1
     done
 }
@@ -102,7 +122,7 @@ compute_mfcc() {
     shift
     for filename in $(sort $*); do
         mkdir -p `dirname $w/$FEAT/$filename.$FEAT`
-        EXEC="wav2mfcc 16 12 $db/$filename.wav $w/$FEAT/$filename.$FEAT"
+        EXEC="wav2mfcc $MFCC_order $MFCC_filter_bank $MFCC_freq $db/$filename.wav $w/$FEAT/$filename.$FEAT"
         echo $EXEC && $EXEC || exit 1
     done
 }
@@ -135,7 +155,7 @@ for cmd in $*; do
        for dir in $db_devel/BLOCK*/SES* ; do
            name=${dir/*\/}
            echo $name ----
-           EXEC="gmm_train -v 1 -T 0.001 -N 5 -m 1 -d $w/$FEAT -e $FEAT -g $w/gmm/$FEAT/$name.gmm $lists/class/$name.train"
+           EXEC="gmm_train -v 1 $TRAIN_OPTS -d $w/$FEAT -e $FEAT -g $w/gmm/$FEAT/$name.gmm $lists/class/$name.train"
            echo $EXEC && $EXEC || exit 1
            echo
        done
@@ -161,8 +181,8 @@ for cmd in $*; do
        # Implement 'trainworld' in order to get a Universal Background Model for speaker verification
        #
        # - The name of the world model will be used by gmm_verify in the 'verify' command below.
-       EXEC="gmm_train -v 1 -T 0.001 -N 5 -m 1 -d $w/$FEAT -e $FEAT -g $w/gmm/$FEAT/$world.gmm $lists/verif/$world.train"
-           echo $EXEC && $EXEC || exit 1
+       # \DONE
+       gmm_train  -v 1 $TRAIN_OPTS -d $w/$FEAT -e $FEAT -g $w/gmm/$FEAT/$world.gmm $lists/verif/$world.train || exit 1
 
    elif [[ $cmd == verify ]]; then
        ## @file
@@ -173,9 +193,8 @@ for cmd in $*; do
        #   For instance:
        #   * <code> gmm_verify ... > $LOG_VERIF </code>
        #   * <code> gmm_verify ... | tee $LOG_VERIF </code>
-       EXEC="gmm_verify -d work/$FEAT/ -e $FEAT -D work/gmm/$FEAT/ -E gmm -w $world lists/gmm.list lists/verif/all.test lists/verif/all.test.candidates"
-        echo $EXEC && $EXEC | tee $LOG_VERIF || exit 1 
-
+       # \DONE
+       gmm_verify -d $w/$FEAT -e $FEAT -D $w/gmm/$FEAT -E gmm -w $world lists/gmm.list lists/verif/all.test lists/verif/all.test.candidates | tee $w/verif_${FEAT}_${name_exp}.log
 
    elif [[ $cmd == verifyerr ]]; then
        if [[ ! -s $LOG_VERIF ]] ; then
@@ -195,10 +214,10 @@ for cmd in $*; do
        #
        # El fichero con el resultado del reconocimiento debe llamarse $FINAL_CLASS, que deberá estar en el
        # directorio de la práctica (PAV/P4).
-       compute_$FEAT $db_test $lists/final/class.test
-       EXEC="gmm_classify -d $w/$FEAT -e $FEAT -D $w/gmm/$FEAT -E gmm $lists/gmm.list $lists/final/class.test"
-        echo $EXEC && $EXEC | tee $FINAL_CLASS || exit 1
-
+       #DONE
+        compute_$FEAT $db_test/spk_cls $lists/final/class.test
+       (gmm_classify -d $w/$FEAT -e $FEAT -D $w/gmm/$FEAT -E gmm $lists/gmm.list $lists/final/class.test | tee $FINAL_CLASS) || exit 1
+   
 
    
    elif [[ $cmd == finalverif ]]; then
@@ -231,6 +250,8 @@ for cmd in $*; do
         perl -ane 'print "$F[0]\t$F[1]\t";
         if ($F[2] > 3.35529) {print "1\n"}
         else {print "0\n"}' $TEMP_VERIF | tee $FINAL_VERIF
+
+
         
    
    # If the command is not recognize, check if it is the name
