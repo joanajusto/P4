@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Make pipeline return code the last non-zero one or zero if all the commands return zero.
-set -o pipefail
-
 ## \file
 ## \TODO This file implements a very trivial feature extraction; use it as a template for other front ends.
 ## 
@@ -18,13 +15,13 @@ cleanup() {
 }
 
 if [[ $# != 5 ]]; then
-   echo "$0 mfcc_order filter_bank_order mfcc_freq input.wav output.mfcc"
+   echo "$0 mfcc_freq mfcc_order filter_bank_order  input.wav output.mfcc"
    exit 1
 fi
 
-mfcc_order=$1
-filter_bank_order=$2
-mfcc_freq=$3
+mfcc_freq=$1
+mfcc_order=$2
+filter_bank_order=$3
 inputfile=$4
 outputfile=$5
 

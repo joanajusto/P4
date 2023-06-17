@@ -43,7 +43,7 @@ LPCC_order=30
 LPCC_cepstrum_order=29
 #MFCC
 MFCC_order=20
-MFCC_filter_bank=33
+MFCC_filter_bank=35
 MFCC_freq=8
 
 #Parametros para entrenar GMM
