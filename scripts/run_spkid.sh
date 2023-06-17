@@ -42,9 +42,9 @@ LPC_order=10
 LPCC_order=30
 LPCC_cepstrum_order=29
 #MFCC
-MFCC_order=18
-MFCC_filter_bank=26
-MFCC_freq=16
+MFCC_order=20
+MFCC_filter_bank=33
+MFCC_freq=8
 
 #Parametros para entrenar GMM
 TO_nmix=30               #-m mix\tNumber of mixtures (def. " << DEF_NMIXTURES << ")
