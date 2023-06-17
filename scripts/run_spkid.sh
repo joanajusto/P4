@@ -39,7 +39,7 @@ TEMP_VERIF=$w/temp_${FEAT}_${name_exp}.log
 #LP
 LPC_order=10
 #LPCC
-LPCC_order=25
+LPCC_order=30
 LPCC_cepstrum_order=29
 #MFCC
 MFCC_order=18
@@ -156,7 +156,7 @@ for cmd in $*; do
            name=${dir/*\/}
            echo $name ----
            EXEC="gmm_train -v 1 $TRAIN_OPTS -d $w/$FEAT -e $FEAT -g $w/gmm/$FEAT/$name.gmm $lists/class/$name.train"
-           echo $EXEC && $EXEC || exit 1
+           echo $EXEC && $EXEC > /dev/null || exit 1
            echo
        done
    elif [[ $cmd == test ]]; then
@@ -239,7 +239,7 @@ for cmd in $*; do
        # realizar este cambio de formato están en el enunciado de la práctica.
 
        # HAY QUE DESCOMENTAR EL COMPUTE FEAT
-       if true; then
+       if false; then
        echo "AJUSTA EL UMBRAL"
        exit 0
        fi
@@ -251,8 +251,6 @@ for cmd in $*; do
         if ($F[2] > 3.35529) {print "1\n"}
         else {print "0\n"}' $TEMP_VERIF | tee $FINAL_VERIF
 
-
-        
    
    # If the command is not recognize, check if it is the name
    # of a feature and a compute_$FEAT function exists.
