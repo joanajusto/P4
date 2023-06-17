@@ -137,7 +137,7 @@ ejercicios indicados.
 
   |                        | LP   | LPCC | MFCC |
   |------------------------|:----:|:----:|:----:|
-  | &rho;<sub>x</sub>[2,3] | -0.872284 | 0.179267 | -0.210827 |
+  | &rho;<sub>x</sub>[2,3] | -0.872284 | 0.179267 | -0.0729107 |
   
   + Compare los resultados de <code>pearson</code> con los obtenidos gráficamente.
   > Los coeficientes calculados concuerdan con las gráficas previamente calculadas. En primer lugar, el coeficiente de mayor valor absoluto se obtiene en el caso de LP, siendo cercano a 1. Por otro lado, los coeficientes de LPCC y MFCC son significativamente menores que el coeficiente de LP, lo que indica una menor correlación y, por ende, una mayor cantidad de información aportada. En conclusión, los coeficientes MFCC presentan una menor correlación, lo que implica que proporcionan la mayor cantidad de información en comparación con los otros.    
