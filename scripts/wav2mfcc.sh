@@ -15,7 +15,7 @@ cleanup() {
 }
 
 if [[ $# != 5 ]]; then
-   echo "$0 mfcc_freq mfcc_order filter_bank_order  input.wav output.mfcc"
+   echo "$0 mfcc_freq mfcc_order filter_bank_order input.wav output.mfcc"
    exit 1
 fi
 
@@ -42,7 +42,7 @@ fi
 
 # Main command for feature extration
 sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WINDOW -l 240 -L 240 |
-	$MFCC -s $fm -l 180 -m $mfcc_order -n $filter_bank_order > $base.mfcc
+	$MFCC -s $mfcc_freq -l 180 -m $mfcc_order -n $filter_bank_order > $base.mfcc
 
 # Our array files need a header with the number of cols and rows:
 ncol=$((mfcc_order)) # mfcc p =>  mc(1) mc(2) ... mc(p) 

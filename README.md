@@ -127,8 +127,8 @@ ejercicios indicados.
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     > Finalmente hacemos el plot de los ficheros de texto. Los códigos usados son los siguientes: <br />
     [`plot_lp.py`](/plots/plot_lp.py) <br />
-    [`plot_lp.py`](/plots/plot_lp.py) <br />
-    [`plot_lp.py`](/plots/plot_lp.py) <br />
+    [`plot_lp.py`](/plots/plot_lpcc.py) <br />
+    [`plot_lp.py`](/plots/plot_mfcc.py) <br />
   + ¿Cuál de ellas le parece que contiene más información?
   > La propiedad de correlación indica el grado de similitud entre dos señales. Cuando dos señales están altamente correladas, proporcionan menos información nueva. En las gráficas superiores, se puede observar que las gráficas de MFCC muestran puntos más separados, lo que indica una menor correlación y mayor diversidad de información. Estas gráficas son las que aportan más información relevante. Por otro lado, en la gráfica de LP se observa que los puntos están muy cerca y correlados, lo que implica que proporciona menos información adicional (hay poca dispersión entre los puntos).
 
@@ -167,6 +167,10 @@ Complete el código necesario para realizar reconociminto del locutor y optimice
 - Inserte una tabla con la tasa de error obtenida en el reconocimiento de los locutores de la base de datos
   SPEECON usando su mejor sistema de reconocimiento para los parámetros LP, LPCC y MFCC.
 
+  |            | LP   | LPCC | MFCC |
+  |------------|:----:|:----:|:----:|
+  | error rate | 8.5 | 0.63 | 1.27 |
+
 ### Verificación del locutor.
 
 Complete el código necesario para realizar verificación del locutor y optimice sus parámetros.
@@ -175,6 +179,13 @@ Complete el código necesario para realizar verificación del locutor y optimice
   de verificación de SPEECON. La tabla debe incluir el umbral óptimo, el número de falsas alarmas y de
   pérdidas, y el score obtenido usando la parametrización que mejor resultado le hubiera dado en la tarea
   de reconocimiento.
+
+  | Resultados    | LP   | LPCC | MFCC |
+  |---------------|:----:|:----:|:----:|
+  | THR           | -0.872284 | 0.179267 | -0.210827 |
+  | Missed        | -0.872284 | 0.179267 | -0.210827 |
+  | FalseAlarm    | -0.872284 | 0.179267 | -0.210827 |
+  | CostDetection | -0.872284 | 0.179267 | -0.210827 |
  
 ### Test final
 
