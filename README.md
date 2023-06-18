@@ -37,22 +37,17 @@ ejercicios indicados.
   sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WINDOW -l 240 -L 240 | $LPC -l 240 -m $lpc_order > $base.lp || exit 1
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   
-  > ### SOX (Sound eXchange)
-  > Este comando toma el archivo de entrada (`$inputfile`) y lo convierte en un flujo de audio sin procesar (`-t raw`). Además, especifica que los datos están codificados como muestras de 16 bits con signo (`-e signed -b 16 -`).
-  >
-  > ### $X2X
-  > Este comando asume que `$X2X` es un programa externo que convierte el formato del flujo de audio. 
-  > La opción `+sf` se utiliza para convertir el flujo de audio a coma flotante.
-  >
-  > ### $FRAME
-  > Es otro programa externo que se utiliza para dividir el flujo de audio en tramas más pequeñas. En este caso, se especifica una longitud de trama de 240 muestras (`-l 240`) y un desplazamiento de 80 muestras (`-p 80`).
-  >
-  > ### $WINDOW
-  >  es un programa que aplica una ventana a cada trama de audio. Aquí se especifica una longitud de ventana de 240 muestras (`-l 240`) y una superposición de ventanas de 240 muestras (`-L 240`), lo que significa que no hay superposición.
-  >
-  > ### $LPC
-  > es un programa que realiza análisis de predicción lineal en cada trama de audio. Se especifica una longitud de trama de 240 muestras (`-l 240`) y se utiliza un orden LPC determinado por la variable `$lpc_order`. 
-  > Los resultados del análisis LPC se redirigen al archivo `$base.lp`.
+  **SOX (Sound eXchange)** Este comando toma el archivo de entrada (`$inputfile`) y lo convierte en un flujo de audio sin procesar (`-t raw`). Además, especifica que los datos están codificados como muestras de 16 bits con signo (`-e signed -b 16 -`).
+  
+  **$X2X** Este comando asume que `$X2X` es un programa externo que convierte el formato del flujo de audio. 
+  La opción `+sf` se utiliza para convertir el flujo de audio a coma flotante.
+  
+  **$FRAME** Es otro programa externo que se utiliza para dividir el flujo de audio en tramas más pequeñas. En este caso, se especifica una longitud de trama de 240 muestras (`-l 240`) y un desplazamiento de 80 muestras (`-p 80`).
+  
+  **$WINDOW** es un programa que aplica una ventana a cada trama de audio. Aquí se especifica una longitud de ventana de 240 muestras (`-l 240`) y una superposición de ventanas de 240 muestras (`-L 240`), lo que significa que no hay superposición.
+  
+  **$LPC** es un programa que realiza análisis de predicción lineal en cada trama de audio. Se especifica una longitud de trama de 240 muestras (`-l 240`) y se utiliza un orden LPC determinado por la variable `$lpc_order`. 
+  Los resultados del análisis LPC se redirigen al archivo `$base.lp`.
 
 
 - Explique el procedimiento seguido para obtener un fichero de formato *fmatrix* a partir de los ficheros de
@@ -71,16 +66,16 @@ ejercicios indicados.
   cat $base.lp >> $outputfile
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   
-  > - El fmatrix crea una matriz que incluye el número de filas `nrow` y todos los coeficientes `ncol`. Las filas corresponden a las tramas de la señal y las columnas a los coeficientes de cada trama.
-  > - Se define el número de columnas como la variable `ncol` como la suma de `lpc_order+1`. 
-  > - Se utiliza el comando `$X2X +fa < $base.lp` para convertir el fichero `$base.lp` en un formato legible por SPTK.
-  > - A continuación, se utiliza el *pipeline* `|` para pasar el resultado al comando `wc -l`. Este comando cuenta el número de líneas en la entrada.
-  > - Después de obtener el recuento de líneas, se utiliza el comando `perl` para realizar el cálculo de filas. La expresión `'print $_/'$ncol', "\n";'` divide el número total de líneas por el valor de `ncol`. Esto se hace para calcular el número de filas necesarias en el fichero fmatrix basado en el número de columnas definidas anteriormente.
-  > - Finalmente, el resultado del cálculo se asigna a la variable `nrow`, que representa el número de filas necesarias en el fichero *fmatrix*.
+  - El fmatrix crea una matriz que incluye el número de filas `nrow` y todos los coeficientes `ncol`. Las filas corresponden a las tramas de la señal y las columnas a los coeficientes de cada trama.
+  - Se define el número de columnas como la variable `ncol` como la suma de `lpc_order+1`. 
+  - Se utiliza el comando `$X2X +fa < $base.lp` para convertir el fichero `$base.lp` en un formato legible por SPTK.
+  - A continuación, se utiliza el *pipeline* `|` para pasar el resultado al comando `wc -l`. Este comando cuenta el número de líneas en la entrada.
+  - Después de obtener el recuento de líneas, se utiliza el comando `perl` para realizar el cálculo de filas. La expresión `'print $_/'$ncol', "\n";'` divide el número total de líneas por el valor de `ncol`. Esto se hace para calcular el número de filas necesarias en el fichero fmatrix basado en el número de columnas definidas anteriormente.
+  - Finalmente, el resultado del cálculo se asigna a la variable `nrow`, que representa el número de filas necesarias en el fichero *fmatrix*.
 
-  * ¿Por qué es más conveniente el formato *fmatrix* que el SPTK?
+- ¿Por qué es más conveniente el formato *fmatrix* que el SPTK?
   
-  > El formato *fmatrix* es útil porque ofrece una representación clara y estructurada de los datos del fichero. Permite visualizar las tramas en filas individuales y los coeficientes de las señales en columnas distintas. Para facilitar la visualización de los resultados, se puede utilizar la herramienta `fmatrix_show`. Además, si se desea examinar columnas específicas, se puede emplear `fmatrix_cut`.
+  El formato *fmatrix* es útil porque ofrece una representación clara y estructurada de los datos del fichero. Permite visualizar las tramas en filas individuales y los coeficientes de las señales en columnas distintas. Para facilitar la visualización de los resultados, se puede utilizar la herramienta `fmatrix_show`. Además, si se desea examinar columnas específicas, se puede emplear `fmatrix_cut`.
 
 - Escriba el *pipeline* principal usado para calcular los coeficientes cepstrales de predicción lineal
   (LPCC) en su fichero <code>scripts/wav2lpcc.sh</code>:
@@ -108,29 +103,30 @@ ejercicios indicados.
   
   + Indique **todas** las órdenes necesarias para obtener las gráficas a partir de las señales 
     parametrizadas.
-    > En primer lugar, damos permiso de ejecución a los archivos creados para lpcc y mfcc
+    En primer lugar, damos permiso de ejecución a los archivos creados para lpcc y mfcc
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     chmod +x /Users/joanajusto/PAV/bin/wav2lpcc 
     chmod +x /Users/joanajusto/PAV/bin/wav2mfcc 
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    > A continuación calculamos las predicciones mediante el uso de run_spkid
+    A continuación calculamos las predicciones mediante el uso de run_spkid
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     FEAT=lp /Users/joanajusto/PAV/bin/run_spkid lp
     FEAT=lpcc /Users/joanajusto/PAV/bin/run_spkid lpcc
     FEAT=mfcc /Users/joanajusto/PAV/bin/run_spkid mfcc  
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    > Convertimos a fichero los coeficientes 2 y 3 del ficheros de parámetros del locutor SES017
+    Convertimos a fichero los coeficientes 2 y 3 del ficheros de parámetros del locutor SES017
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     fmatrix_show work/lp/BLOCK01/SES017/*.lp | egrep '^\[' | cut -f4,5 > plots/lp.txt  
     fmatrix_show work/lpcc/BLOCK01/SES017/*.lpcc | egrep '^\[' | cut -f4,5 > plots/lpcc.txt 
     fmatrix_show work/mfcc/BLOCK01/SES017/*.mfcc | egrep '^\[' | cut -f4,5 > plots/mfcc.txt   
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    > Finalmente hacemos el plot de los ficheros de texto. Los códigos usados son los siguientes: <br />
+    Finalmente hacemos el plot de los ficheros de texto. Los códigos usados son los siguientes: <br />
     [`plot_lp.py`](/plots/plot_lp.py) <br />
     [`plot_lp.py`](/plots/plot_lpcc.py) <br />
     [`plot_lp.py`](/plots/plot_mfcc.py) <br />
   + ¿Cuál de ellas le parece que contiene más información?
-  > La propiedad de correlación indica el grado de similitud entre dos señales. Cuando dos señales están altamente correladas, proporcionan menos información nueva. En las gráficas superiores, se puede observar que las gráficas de MFCC muestran puntos más separados, lo que indica una menor correlación y mayor diversidad de información. Estas gráficas son las que aportan más información relevante. Por otro lado, en la gráfica de LP se observa que los puntos están muy cerca y correlados, lo que implica que proporciona menos información adicional (hay poca dispersión entre los puntos).
+                                          
+    La propiedad de correlación indica el grado de similitud entre dos señales. Cuando dos señales están altamente correladas, proporcionan menos información nueva. En las gráficas superiores, se puede observar que las gráficas de MFCC muestran puntos más separados, lo que indica una menor correlación y mayor diversidad de información. Estas gráficas son las que aportan más información relevante. Por otro lado, en la gráfica de LP se observa que los puntos están muy cerca y correlados, lo que implica que proporciona menos información adicional (hay poca dispersión entre los puntos).
 
 - Usando el programa <code>pearson</code>, obtenga los coeficientes de correlación normalizada entre los
   parámetros 2 y 3 para un locutor, y rellene la tabla siguiente con los valores obtenidos.
@@ -140,10 +136,12 @@ ejercicios indicados.
   | &rho;<sub>x</sub>[2,3] | -0.872284 | 0.179267 | -0.0729107 |
   
   + Compare los resultados de <code>pearson</code> con los obtenidos gráficamente.
-  > Los coeficientes calculados concuerdan con las gráficas previamente calculadas. En primer lugar, el coeficiente de mayor valor absoluto se obtiene en el caso de LP, siendo cercano a 1. Por otro lado, los coeficientes de LPCC y MFCC son significativamente menores que el coeficiente de LP, lo que indica una menor correlación y, por ende, una mayor cantidad de información aportada. En conclusión, los coeficientes MFCC presentan una menor correlación, lo que implica que proporcionan la mayor cantidad de información en comparación con los otros.    
+
+    Los coeficientes calculados concuerdan con las gráficas previamente calculadas. En primer lugar, el coeficiente de mayor valor absoluto se obtiene en el caso de LP, siendo cercano a 1. Por otro lado, los coeficientes de LPCC y MFCC son significativamente menores que el coeficiente de LP, lo que indica una menor correlación y, por ende, una mayor cantidad de información aportada. En conclusión, los coeficientes MFCC presentan una menor correlación, lo que implica que proporcionan la mayor cantidad de información en comparación con los otros.    
   
 - Según la teoría, ¿qué parámetros considera adecuados para el cálculo de los coeficientes LPCC y MFCC?
-> Según la teoría, para el cálculo de LPCC debería ser suficiente con 13 coeficientes, mientras que para MFCC se suelen escoger 13 coeficientes y entre 24 y 40 filtros.
+
+  Según la teoría, para el cálculo de LPCC debería ser suficiente con 13 coeficientes, mientras que para MFCC se suelen escoger 13 coeficientes y entre 24 y 40 filtros.
                                         
 ### Entrenamiento y visualización de los GMM.
 
@@ -182,15 +180,18 @@ Complete el código necesario para realizar verificación del locutor y optimice
 
   | Resultados    | LP   | LPCC | MFCC |
   |---------------|:----:|:----:|:----:|
-  | THR           | -0.872284 | 0.179267 | -0.210827 |
-  | Missed        | -0.872284 | 0.179267 | -0.210827 |
-  | FalseAlarm    | -0.872284 | 0.179267 | -0.210827 |
-  | CostDetection | -0.872284 | 0.179267 | -0.210827 |
+  | THR           | 0.533434273087291 | 0.217809886153998 | 0.543063485376503 |
+  | Missed        | 90/250 = 0.3600 | 6/250 = 0.0240 | 25/250 = 0.1040 |
+  | FalseAlarm    | 8/1000 = 0.0080 | 4/1000 = 0.0040 | 3/1000 = 0.0030 |
+  | CostDetection | 43.2 | 6.0 | 13.1 |
  
 ### Test final
 
 - Adjunte, en el repositorio de la práctica, los ficheros `class_test.log` y `verif_test.log` 
   correspondientes a la evaluación *ciega* final.
+  
+  [`class_test.log`](/work/class_test.log) <br />
+  [`verif_test.log`](/work/verif_test.log) <br />
 
 ### Trabajo de ampliación.
 
