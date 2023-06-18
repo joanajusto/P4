@@ -169,7 +169,7 @@ Complete el código necesario para realizar reconociminto del locutor y optimice
 
   |            | LP   | LPCC | MFCC |
   |------------|:----:|:----:|:----:|
-  | error rate | 8.5 | 0.63 | 1.27 |
+  | error rate | 10.57 | 0.51 | 1.15 |
 
 ### Verificación del locutor.
 
