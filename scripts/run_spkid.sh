@@ -39,11 +39,11 @@ TEMP_VERIF=$w/temp_${FEAT}_${name_exp}.log
 #LP
 LPC_order=10
 #LPCC
-LPCC_order=30
-LPCC_cepstrum_order=29
+LPCC_order=25
+LPCC_cepstrum_order=25
 #MFCC
-MFCC_order=20
-MFCC_filter_bank=35
+MFCC_order=18
+MFCC_filter_bank=26
 MFCC_freq=8
 
 #Parametros para entrenar GMM
@@ -194,8 +194,9 @@ for cmd in $*; do
        #   * <code> gmm_verify ... > $LOG_VERIF </code>
        #   * <code> gmm_verify ... | tee $LOG_VERIF </code>
        # \DONE
-       gmm_verify -d $w/$FEAT -e $FEAT -D $w/gmm/$FEAT -E gmm -w $world lists/gmm.list lists/verif/all.test lists/verif/all.test.candidates | tee $w/verif_${FEAT}_${name_exp}.log
-
+       EXEC="gmm_verify -d work/$FEAT -e $FEAT -D work/gmm/$FEAT -E gmm -w $world lists/gmm.list lists/verif/all.test lists/verif/all.test.candidates"
+        echo $EXEC && $EXEC | tee $LOG_VERIF || exit 1
+        
    elif [[ $cmd == verifyerr ]]; then
        if [[ ! -s $LOG_VERIF ]] ; then
           echo "ERROR: $LOG_VERIF not created"
@@ -248,7 +249,7 @@ for cmd in $*; do
        EXEC="gmm_verify -d work/$FEAT/ -e $FEAT -D work/gmm/$FEAT/ -E gmm -w $world lists/gmm.list lists/final/verif.test lists/final/verif.test.candidates"
         echo $EXEC && $EXEC | tee $TEMP_VERIF || exit 1
         perl -ane 'print "$F[0]\t$F[1]\t";
-        if ($F[2] > 3.35529) {print "1\n"}
+        if ($F[2] > 0.217809886153998) {print "1\n"}
         else {print "0\n"}' $TEMP_VERIF | tee $FINAL_VERIF
 
    
