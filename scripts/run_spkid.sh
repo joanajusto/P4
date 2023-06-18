@@ -196,7 +196,7 @@ for cmd in $*; do
        # \DONE
        EXEC="gmm_verify -d work/$FEAT -e $FEAT -D work/gmm/$FEAT -E gmm -w $world lists/gmm.list lists/verif/all.test lists/verif/all.test.candidates"
         echo $EXEC && $EXEC | tee $LOG_VERIF || exit 1
-        
+
    elif [[ $cmd == verifyerr ]]; then
        if [[ ! -s $LOG_VERIF ]] ; then
           echo "ERROR: $LOG_VERIF not created"
@@ -216,8 +216,9 @@ for cmd in $*; do
        # El fichero con el resultado del reconocimiento debe llamarse $FINAL_CLASS, que deberá estar en el
        # directorio de la práctica (PAV/P4).
        #DONE
-        compute_$FEAT $db_test/spk_cls $lists/final/class.test
-       (gmm_classify -d $w/$FEAT -e $FEAT -D $w/gmm/$FEAT -E gmm $lists/gmm.list $lists/final/class.test | tee $FINAL_CLASS) || exit 1
+        compute_$FEAT $db_test $lists/final/class.test
+       EXEC="gmm_classify -d $w/$FEAT -e $FEAT -D $w/gmm/$FEAT -E gmm $lists/gmm.list $lists/final/class.test"
+        echo $EXEC && $EXEC | tee $FINAL_CLASS || exit 1
    
 
    
