@@ -158,6 +158,10 @@ Complete el código necesario para entrenar modelos GMM.
   de la página 20 del enunciado puede servirle de referencia del resultado deseado). Analice la capacidad
   del modelado GMM para diferenciar las señales de uno y otro.
 
+  | <img src="./img/train_mfcc.png"  width="700" /> | <img src="./img/train_mfcc.png"  width="700" /> |
+  |------------------------|:----:|:----:|:----:|
+  | <img src="./img/train_mfcc.png"  width="700" /> | <img src="./img/train_mfcc.png"  width="700" /> | 
+
 ### Reconocimiento del locutor.
 
 Complete el código necesario para realizar reconociminto del locutor y optimice sus parámetros.
