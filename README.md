@@ -159,7 +159,7 @@ Complete el código necesario para entrenar modelos GMM.
   del modelado GMM para diferenciar las señales de uno y otro.
 
   | <img src="./img/train_mfcc.png"  width="700" /> | <img src="./img/train_mfcc.png"  width="700" /> |
-  |------------------------|:----:|:----:|:----:|
+  |-------------------------------------------------|:-----------------------------------------------:|
   | <img src="./img/train_mfcc.png"  width="700" /> | <img src="./img/train_mfcc.png"  width="700" /> | 
 
 ### Reconocimiento del locutor.
