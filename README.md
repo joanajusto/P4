@@ -151,12 +151,16 @@ Complete el código necesario para entrenar modelos GMM.
   para sus dos primeros coeficientes de MFCC.
  
   <p align="center">
-  <img src="./img/train_mfcc.png"  width="700" /><br />
+  <img src="./img/007.png"  width="700" /><br />
   </p>
 
 - Inserte una gráfica que permita comparar los modelos y poblaciones de dos locutores distintos (la gŕafica
   de la página 20 del enunciado puede servirle de referencia del resultado deseado). Analice la capacidad
   del modelado GMM para diferenciar las señales de uno y otro.
+
+  | <img src="./img/007-007.png"  width="700" /> | <img src="./img/107-007.png"  width="700" /> |
+  |----------------------------------------------|:--------------------------------------------:|
+  | <img src="./img/007-107.png"  width="700" /> | <img src="./img/107-107.png"  width="700" /> | 
 
 ### Reconocimiento del locutor.
 
