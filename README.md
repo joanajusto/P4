@@ -88,7 +88,7 @@ ejercicios indicados.
   fichero <code>scripts/wav2mfcc.sh</code>:
   
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.sh
-  sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WINDOW -l 240 -L 240 | $MFCC -l 240 -s 8 -w 1 -m $mfcc_order -n $mfcc_nfilter > $base.mfcc
+  sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WINDOW -l 240 -L 240 | $MFCC -l 240 -s 8 -w 1 -s $MFCC_freq -m $MFCC_order -n $MFCC_filter_bank > $base.mfcc
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ### Extracción de características.
