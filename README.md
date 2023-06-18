@@ -151,7 +151,7 @@ Complete el código necesario para entrenar modelos GMM.
   para sus dos primeros coeficientes de MFCC.
  
   <p align="center">
-  <img src="./img/train_mfcc.png"  width="700" /><br />
+  <img src="./img/007.png"  width="700" /><br />
   </p>
 
 - Inserte una gráfica que permita comparar los modelos y poblaciones de dos locutores distintos (la gŕafica
