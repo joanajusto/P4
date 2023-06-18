@@ -103,7 +103,7 @@ ejercicios indicados.
   <p align="center">
   <img src="./img/lp.png"  width=700" /><br />
   <img src="./img/lpcc.png"  width="700" /><br />
-  <img src="./img/mfcc.png"  width="700" /><br />
+  <img src="./img/mfcc_bo.png"  width="700" /><br />
   </p>
   
   + Indique **todas** las órdenes necesarias para obtener las gráficas a partir de las señales 
@@ -137,7 +137,7 @@ ejercicios indicados.
 
   |                        | LP   | LPCC | MFCC |
   |------------------------|:----:|:----:|:----:|
-  | &rho;<sub>x</sub>[2,3] | -0.872284 | 0.179267 | -0.210827 |
+  | &rho;<sub>x</sub>[2,3] | -0.872284 | 0.179267 | -0.0729107 |
   
   + Compare los resultados de <code>pearson</code> con los obtenidos gráficamente.
   > Los coeficientes calculados concuerdan con las gráficas previamente calculadas. En primer lugar, el coeficiente de mayor valor absoluto se obtiene en el caso de LP, siendo cercano a 1. Por otro lado, los coeficientes de LPCC y MFCC son significativamente menores que el coeficiente de LP, lo que indica una menor correlación y, por ende, una mayor cantidad de información aportada. En conclusión, los coeficientes MFCC presentan una menor correlación, lo que implica que proporcionan la mayor cantidad de información en comparación con los otros.    
@@ -169,7 +169,7 @@ Complete el código necesario para realizar reconociminto del locutor y optimice
 
   |            | LP   | LPCC | MFCC |
   |------------|:----:|:----:|:----:|
-  | error rate | 8.5 | 0.63 | 1.27 |
+  | error rate | 10.57 | 0.51 | 1.15 |
 
 ### Verificación del locutor.
 
