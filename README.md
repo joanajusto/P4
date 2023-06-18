@@ -158,9 +158,9 @@ Complete el código necesario para entrenar modelos GMM.
   de la página 20 del enunciado puede servirle de referencia del resultado deseado). Analice la capacidad
   del modelado GMM para diferenciar las señales de uno y otro.
 
-  | <img src="./img/train_mfcc.png"  width="700" /> | <img src="./img/train_mfcc.png"  width="700" /> |
+  | <img src="./img/007-007.png"  width="700" /> | <img src="./img/107-007.png"  width="700" /> |
   |-------------------------------------------------|:-----------------------------------------------:|
-  | <img src="./img/train_mfcc.png"  width="700" /> | <img src="./img/train_mfcc.png"  width="700" /> | 
+  | <img src="./img/007-107.png"  width="700" /> | <img src="./img/107-107.png"  width="700" /> | 
 
 ### Reconocimiento del locutor.
 
